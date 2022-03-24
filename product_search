@@ -1,0 +1,94 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+import time
+
+
+global_test_driver = None
+
+
+def login():
+    driver = webdriver.Chrome(executable_path="/Users/brit/Downloads/chromedriver")
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver.get("https://test.freeingreturns-app.com/")
+    driver.find_element_by_id("frqa.loginScreen.email_input").send_keys("britsqatestcasestore5@gmail.com")
+    driver.find_element_by_id("frqa.loginScreen.password_input").send_keys("P@$$w0rd$01")
+    driver.find_element_by_id("frqa.loginScreen.sign_in_button").click()
+    set_driver(driver)
+
+
+def add_value_to_searchbox(search_value, element_id):
+    time.sleep(4)
+    inputElement = get_driver().find_element_by_id(element_id)
+    inputElement.send_keys(search_value)
+
+
+def clear_searchinputbox(element_id):
+    time.sleep(4)
+    get_driver().find_element_by_id(element_id).clear()
+
+def add_value_to_searchbox_by_xpath(search_value, xpath):
+    time.sleep(4)
+    inputElement = get_driver().find_element_by_xpath(xpath)
+    inputElement.send_keys(search_value)
+
+def clear_searchinputbox_xpath(xpath):
+        time.sleep(4)
+        get_driver().find_element_by_xpath(xpath).clear()
+
+
+def get_driver():
+    global global_test_driver
+    return global_test_driver
+
+
+def set_driver(the_driver):
+    global global_test_driver
+    global_test_driver = the_driver
+
+
+def search(tweety, elmo, bigbird, oscar, minnie, mickey, donald, clifford):
+
+    login()
+    time.sleep(10)
+    element = WebDriverWait(get_driver(), 30).until(EC.visibility_of_element_located((By.ID, tweety)))
+    print(element)
+    element.click()
+    add_value_to_searchbox(bigbird, elmo)
+
+    clear_searchinputbox(elmo)
+    add_value_to_searchbox(oscar, elmo)
+    clear_searchinputbox(elmo)
+    add_value_to_searchbox('4&^54*544454545454545', elmo)
+    clear_searchinputbox(elmo)
+    add_value_to_searchbox('ball', elmo)
+    clear_searchinputbox(elmo)
+    add_value_to_searchbox_by_xpath(bigbird, minnie)
+    clear_searchinputbox_xpath(minnie)
+    add_value_to_searchbox_by_xpath(mickey, minnie)
+    clear_searchinputbox_xpath(minnie)
+    add_value_to_searchbox_by_xpath(oscar, donald)
+    clear_searchinputbox_xpath(donald)
+    add_value_to_searchbox_by_xpath(oscar, donald)
+    clear_searchinputbox_xpath(donald)
+    add_value_to_searchbox_by_xpath(bigbird, clifford)
+    clear_searchinputbox_xpath(clifford)
+    add_value_to_searchbox_by_xpath('33434343343', clifford)
+    clear_searchinputbox_xpath(clifford)
+
+
+    time.sleep(3)
+    get_driver().quit()
+
+def test_run_search_test_for():
+    search("frqa.dashboard.products_link","frqa.products.search_input","basketball",123432434222222222,"//thead/tr[1]/th[2]/div[2]/input[1]","blues clues toys","//thead/tr[1]/th[3]/div[2]/input[1]","//thead/tr[1]/th[4]/div[2]/input[1]")
+    search("frqa.dashboard.customers_link","frqa.customers.search_input","Jennifer",123432434222222222,"//thead/tr[1]/th[2]/div[2]/input[1]","Wesley","//thead/tr[1]/th[3]/div[2]/input[1]","//thead/tr[1]/th[4]/div[2]/input[1]")
+    search("frqa.dashboard.orders_link","frqa.orders.search_input",1233, 123432434222222222, "//thead/tr[1]/th[2]/div[2]/input[1]","12/2/22","//thead/tr[1]/th[3]/div[2]/input[1]","//thead/tr[1]/th[4]/div[2]/input[1]")
+
+#expected_search_result = '"basketball"'
+#actual_search_result = driver.find_element(By.XPATH, '').text
+
+#assert expected_search_result == actual_search_result, f'Error. Expected search result: {expected_search_result}, but actual search result: {actual_search_result}
