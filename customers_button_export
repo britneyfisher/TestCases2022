@@ -1,0 +1,27 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+import time
+import pytest
+
+
+def test_customersearchbuttons():
+    driver = webdriver.Chrome(executable_path="/Users/brit/Downloads/chromedriver")
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver.get("https://test.freeingreturns-app.com/")
+    driver.find_element_by_id("frqa.loginScreen.email_input").send_keys("britsqatestcasestore5@gmail.com")
+    driver.find_element_by_id("frqa.loginScreen.password_input").send_keys("P@$$w0rd$01")
+    driver.find_element_by_id("frqa.loginScreen.sign_in_button").click()
+    time.sleep(5)
+    element = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, "frqa.dashboard.customers_link")))
+    print(element)
+    element.click()
+    time.sleep(4)
+    driver.find_element_by_id("frqa.customers.sort_button").click()
+    time.sleep(5)
+    driver.find_element(By.XPATH, "//i[@class='fas fa-file-export fa-2x']").click()
+    time.sleep(5)
+    driver.quit()
