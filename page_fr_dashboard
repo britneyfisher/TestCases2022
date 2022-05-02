@@ -1,0 +1,30 @@
+from page.fr_dashboard.locators_fr_dashboard import LocatorFRDashboard
+from utils.json_parser.json_parser import DataParser
+from utils.webdriver_wrapper.selenium_lib import SeleniumLib
+from utils.logger.logger import logger
+
+
+class PageFRDashboard(SeleniumLib):
+
+    def __init__(self, driver):
+        self.driver = driver
+        self.locators = LocatorFRDashboard()
+        self.dparser = DataParser()
+
+    def validate_fr_dashboard_page(self):
+        logger.info("Validating FR Dashboard Page - Started")
+
+        assert self.is_displayed(self.locators.label_dashboard), "Dashboard label not displayed"
+
+        assert self.is_displayed(self.locators.label_orders_value), "Orders Value label not displayed"
+        assert self.is_displayed(self.locators.label_products_value), "Products value label not displayed"
+        assert self.is_displayed(self.locators.label_orders), "Orders label not displayed"
+
+        assert self.is_displayed(self.locators.label_customers), "Customers link not displayed"
+        assert self.is_displayed(self.locators.label_customers_value), "Customers value not displayed"
+        assert self.is_displayed(self.locators.label_last_updated), "Last updated label not displayed"
+        assert self.is_displayed(self.locators.label_returned_items), "Returned items graph  not displayed"
+        assert self.is_displayed(self.locators.label_total_returns), "Total returns graph not displayed"
+        assert self.is_displayed(self.locators.label_total_sales), "Total sales graph not displayed"
+
+        logger.info("Validating FR Dashboard Page - Ended")
