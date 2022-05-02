@@ -1,0 +1,21 @@
+from page.fr_reason_code import locators_fr_reason_code
+from page.fr_reason_code.locators_fr_reason_code import LocatorFRReasonCode
+from utils.json_parser.json_parser import DataParser
+from utils.webdriver_wrapper.selenium_lib import SeleniumLib
+from utils.logger.logger import logger
+
+
+class PageFRReasonCode(SeleniumLib):
+
+    def __init__(self, driver):
+        self.driver = driver
+        self.locators = LocatorFRReasonCode()
+        self.dparser = DataParser()
+
+    def navigate_to_reason_code(self):
+        logger.info("Reason Code Navigation - Started")
+        self.click(self.locators.link_reason_code)
+        self.wait()
+        assert self.is_displayed(locators_fr_reason_code.link_reason_code), "Link not active"
+        assert self.is_displayed(locators_fr_reason_code.label_reason_code), "Reason Code label is not displayed"
+        logger.info("Reason Code Navigation - Ended")
