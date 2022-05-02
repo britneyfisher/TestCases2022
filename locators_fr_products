@@ -1,0 +1,8 @@
+from selenium.webdriver.common.by import By
+
+
+class LocatorFRProducts:
+    label_products = (By.XPATH, "//a[contains(text(), 'Products')]")
+    link_products_active = (By.XPATH, "//a[contains(@class,'active') and contains(@href, '/admin/products')]"
+                                       "/p[contains(text(), 'Products')]")
+
