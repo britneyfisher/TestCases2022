@@ -1,0 +1,10 @@
+from selenium.webdriver.common.by import By
+
+
+class LocatorFRReasonCode:
+    label_reason_code = (By.XPATH, "//a[contains(text(), 'Reason Code')]")
+    link_reason_code_active = (By.XPATH, "//a[contains(@class,'active') and contains(@href, '/admin/reasoncode')]"
+                                       "/p[contains(text(), 'Reason Code')]")
+
+
+
