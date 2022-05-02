@@ -1,0 +1,21 @@
+from page.fr_products import locators_fr_products
+from page.fr_products.locators_fr_products import LocatorFRProducts
+from utils.json_parser.json_parser import DataParser
+from utils.webdriver_wrapper.selenium_lib import SeleniumLib
+from utils.logger.logger import logger
+
+
+class PageFRProducts(SeleniumLib):
+
+    def __init__(self, driver):
+        self.driver = driver
+        self.locators = LocatorFRProducts()
+        self.dparser = DataParser()
+
+    def navigate_to_products(self):
+        logger.info("Products Navigation - Started")
+        self.click(self.locators.link_products)
+        self.wait()
+        assert self.is_displayed(locators_fr_products.link_products), "Link not active"
+        assert self.is_displayed(locators_fr_products.label_products), "Products label is not displayed"
+        logger.info("Products Navigation - Ended")
