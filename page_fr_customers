@@ -1,0 +1,21 @@
+from page.fr_customers import locators_fr_customers
+from page.fr_customers.locators_fr_customers import LocatorFRCustomers
+from utils.json_parser.json_parser import DataParser
+from utils.webdriver_wrapper.selenium_lib import SeleniumLib
+from utils.logger.logger import logger
+
+
+class PageFRCustomers(SeleniumLib):
+
+    def __init__(self, driver):
+        self.driver = driver
+        self.locators = LocatorFRCustomers()
+        self.dparser = DataParser()
+
+    def navigate_to_customers(self):
+        logger.info("Customers Navigation - Started")
+        self.click(self.locators.link_customers)
+        self.wait()
+        assert self.is_displayed(locators_fr_customers.link_customers), "Link not active"
+        assert self.is_displayed(locators_fr_customers.label_customers), "Customers label is not displayed"
+        logger.info("Customers Navigation - Ended")
