@@ -1,0 +1,100 @@
+import time
+
+from page.fr_user_profile.locators_fr_user_profile import LocatorFRUserProfile
+from utils.json_parser.json_parser import DataParser
+from utils.webdriver_wrapper.selenium_lib import SeleniumLib
+from utils.logger.logger import logger
+
+
+class PageFRUserProfile(SeleniumLib):
+
+    def __init__(self, driver):
+        self.driver = driver
+        self.locators = LocatorFRUserProfile()
+        self.dparser = DataParser()
+
+    def validate_fr_user_profile_page(self):
+        logger.info("Validating FR User Profile Page - Started")
+        assert self.is_displayed(self.locators.label_user_profile), "User profile label not displayed"
+        assert self.is_displayed(self.locators.link_user_profile_active), "User profile link not displayed"
+        assert self.is_displayed(self.locators.label_last_name), "Last name label not displayed"
+        assert self.is_displayed(self.locators.label_email_id), "Email label not displayed"
+        assert self.is_displayed(self.locators.input_email_id), "Email input not displayed"
+        assert self.is_displayed(self.locators.input_first_name), "First name input not displayed"
+        assert self.is_displayed(self.locators.label_first_name), "First name label not displayed"
+        assert self.is_displayed(self.locators.input_last_name), "Last name input not displayed"
+        assert self.is_displayed(self.locators.input_user_name), "User name input not displayed"
+        assert self.is_displayed(self.locators.label_user_name), "User name label not displayed"
+        assert self.is_displayed(self.locators.label_profile_image), "Profile label not displayed"
+        assert self.is_displayed(self.locators.label_edit_profile), "Edit profile label not displayed"
+        assert self.is_displayed(self.locators.button_update_profile), "Update profile button not displayed"
+        self.click(self.locators.button_update_profile)
+        assert self.is_displayed(self.locators.button_save_profile), "Save button not displayed"
+        assert self.is_displayed(self.locators.button_cancel_profile), "Cancel button not displayed"
+        self.click(self.locators.button_cancel_profile)
+        logger.info("Validating FR User Profile Page - Ended")
+
+    def update_profile(self, **kwargs):
+        import re
+        logger.info("Validating FR Update Profile Method - Started")
+        self.click(self.locators.button_update_profile)
+        assert False == self.is_element_enabled(self.locators.input_user_name), 'Username input field is not disabled'
+        email_val, email_mandate_val, first_name_val, first_name_mandate_val, last_name_val = 0, 0, 0, 0, 0
+        if 'email' in kwargs:
+            email_val = 0 if re.search(r'\w+\@\w+\.com', kwargs.get('email')) else 1
+            email_mandate_val = 0 if kwargs.get('email') is not None else 1
+            self.send_keys(self.locators.input_email_id, kwargs['email'])
+        if 'first_name' in kwargs:
+            self.send_keys(self.locators.input_first_name, kwargs['first_name'])
+            first_name_val = 0 if re.search(r'^[A-Za-z]+$', kwargs.get('first_name')) else 1
+            first_name_mandate_val = 0 if kwargs.get('first_name') is not None else 1
+        if 'last_name' in kwargs:
+            self.send_keys(self.locators.input_last_name, kwargs['last_name'])
+            last_name_val = 0 if re.search(r'^[A-Za-z]+$', kwargs.get('last_name')) else 1
+        if 'button_click' in kwargs:
+            btn_to_click = self.locators.button_save_profile if kwargs['button_click'] == 'Save Profile' \
+                else self.locators.button_cancel_profile
+        else:
+            btn_to_click = self.locators.button_cancel_profile
+
+        if kwargs['button_click'] == 'Save Profile':
+            if any((email_val, first_name_val, last_name_val, email_mandate_val, first_name_mandate_val)):
+                self._err_val_msg_for_update(email=email_val, first_name=first_name_val, last_name=last_name_val,
+                                             email_mandate=email_mandate_val, first_name_mandate=first_name_mandate_val)
+            else:
+                self.click(btn_to_click)
+                time.sleep(2)
+                assert self.is_displayed(self.locators.alert_profile_updated_successfully), \
+                    'Account updated successfully msg was not displayed'
+                self.click(self.locators.alert_profile_updated_successfully)
+        logger.info("Validating FR Update Profile Method - Started")
+
+    def _err_val_msg_for_update(self, **kwargs):
+        status = False
+        self.click(self.locators.button_save_profile)
+        if kwargs['email'] or kwargs['email_mandate']:
+            status = self.is_displayed(self.locators.label_email_val_msg)
+        elif kwargs['first_name']:
+            status = self.is_displayed(self.locators.label_first_name_val_msg)
+        elif kwargs['last_name']:
+            status = self.is_displayed(self.locators.label_first_name_val_msg)
+        elif kwargs['first_name_mandate']:
+            status = self.is_displayed(self.locators.label_first_name_mandate_val_msg)
+        assert status, F'{kwargs} error validation msg not displayed !'
+        self.click(self.locators.button_cancel_profile)
+        # temp fix need to write the re-directional method
+
+    def user_profile_data_compare(self, **kwargs):
+        logger.info("Validating FR User Profile Data - Started")
+        if 'email' in kwargs:
+            email_val = self.get_element_attribute(self.locators.input_email_id)
+            assert kwargs.get('email') == email_val, f"expected value {kwargs.get('email')}is not same as actual value {email_val}"
+        if 'first_name' in kwargs:
+            first_name_val = self.get_element_attribute(self.locators.input_first_name)
+            assert kwargs.get(
+                'first_name') == first_name_val, f"expected value {kwargs.get('first_name')}is not same as actual value {first_name_val}"
+        if 'last_name' in kwargs:
+            last_name_val = self.get_element_attribute(self.locators.input_last_name)
+            assert kwargs.get(
+                'last_name') == last_name_val, f"expected value {kwargs.get('last_name')}is not same as actual value {last_name_val}"
+        logger.info("Validating FR User Profile Data - Ended")
