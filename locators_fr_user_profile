@@ -1,0 +1,37 @@
+from selenium.webdriver.common.by import By
+
+
+class LocatorFRUserProfile:
+    label_user_profile = (By.XPATH, "//a[contains(text(), 'User Profile')]")
+    link_user_profile_active = (By.XPATH, "//a[contains(@class,'active') and contains(@href, '/admin/profile')]"
+                                       "/p[contains(text(), 'User Profile')]")
+
+    label_edit_profile = (By.XPATH, "//*[contains(text(),'Edit Profile')]")
+    label_user_name = (By.XPATH, "//*[contains(text(),'User Name')]")
+    input_user_name = (By.XPATH, "//input[@id='frqa.userProfile.username_input']")
+    label_email_id = (By.XPATH, "//*[contains(text(),'Email ID')]")
+    input_email_id = (By.XPATH, "//input[@id='frqa.userProfile.email_input']")
+    label_first_name = (By.XPATH, "//*[contains(text(),'First name')]")
+    input_first_name = (By.XPATH, "//input[@id='frqa.userProfile.first_name_input']")
+    label_last_name = (By.XPATH, "//*[contains(text(),'Last name')]")
+    input_last_name = (By.XPATH, "//input[@id='frqa.userProfile.last_name_input']")
+    button_update_profile = (By.XPATH, "//button[contains(text(),'Update Profile')]")
+    button_save_profile = (By.XPATH, "//button[contains(text(),'Save profile')]")
+    button_cancel_profile = (By.XPATH, "//button[contains(text(),'Cancel')]")
+    label_profile_image = (By.XPATH, "//*[contains(text(),'Click or drag file here to change profile image')]")
+    alert_profile_updated_successfully = (By.XPATH, "//div[contains(@class,'alert')]/h4[contains(text(),'Account updated successfully!')]")
+
+    label_email_val_msg = (
+        By.XPATH, "//div[contains(@class,'errorMsg') and contains(text(),'Please enter valid email')]")
+    label_last_name_val_msg = (
+        By.XPATH,
+        "//input[@name='lastname']/following-sibling::div[contains(text(),'Please enter alphabet character')]")
+    label_first_name_val_msg = (
+        By.XPATH,
+        "//input[@name='firstname']/preceding-sibling::div[contains(text(),'Please enter alphabet character')]")
+
+    label_first_name_val_msg = (
+        By.XPATH,
+        "//input[@name='lastname']/preceding-sibling::div[contains(text(),'Please enter alphabet character')]")
+    label_first_name_mandate_val_msg = (
+        By.XPATH, "//input[@name='lastname']/preceding-sibling::div[contains(text(),'Please enter your firstname')]")
