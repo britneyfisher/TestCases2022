@@ -1,0 +1,21 @@
+from selenium.webdriver.common.by import By
+
+
+class LocatorFRDashboard:
+    label_dashboard = (By.XPATH, "//a[contains(text(), 'Dashboard')]")
+    link_dashboard = (By.XPATH, "//p[contains(text(), 'Dashboard')]")
+    link_dashboard_active = (By.XPATH, "//a[contains(@class,'active') and contains(@href, '/admin/dashboard')]"
+                                       "/p[contains(text(), 'Dashboard')]")
+    label_products = (By.XPATH, "//a[@id='frqa.dashboard.products_link' and contains(@href, '/products')]/preceding::"
+                                "p[contains(text(), 'Products')]")
+    label_orders = (By.XPATH, "//a[@id = 'frqa.dashboard.orders_link' and contains(@href, '/orders')]/preceding::"
+                              "p[contains(text(), 'Orders')]")
+    label_customers = (By.XPATH, "//a[@id = 'frqa.dashboard.customers_link' and contains(@href, '/customers')]"
+                                 "/preceding::p[contains(text(), 'Customers')]")
+    label_returned_items = (By.XPATH, "(//canvas[contains(@class,'chartjs')])[position()=1]")
+    label_total_sales = (By.XPATH, "(//canvas[contains(@class,'chartjs')])[position()=2]")
+    label_total_returns = (By.XPATH, "(//canvas[contains(@class,'chartjs')])[position()=3]")
+    label_last_updated = (By.XPATH, "//*[contains(text(),'last updated:')]")
+    label_products_value = (By.XPATH, "//a[@id='frqa.dashboard.products_link']//*//*[contains(@class,'values')]")
+    label_orders_value = (By.XPATH, "//a[@id='frqa.dashboard.orders_link']//*//*[contains(@class,'values')]")
+    label_customers_value = (By.XPATH, "//a[@id='frqa.dashboard.customers_link']//*//*[contains(@class,'values')]")
