@@ -1,0 +1,8 @@
+from selenium.webdriver.common.by import By
+
+
+class LocatorFRReturnsAnalysis:
+    label_returns_analysis = (By.XPATH, "//a[contains(text(), 'Returns Analysis')]")
+    link_returns_analysis_active = (By.XPATH, "//a[contains(@class,'active') and contains(@href, '/admin/returnAnalysis')]"
+                                       "/p[contains(text(), 'Returns Analysis')]")
+
