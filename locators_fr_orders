@@ -1,0 +1,8 @@
+from selenium.webdriver.common.by import By
+
+
+class LocatorFROrders:
+    label_orders = (By.XPATH, "//a[contains(text(), 'Orders')]")
+    link_orders_active = (By.XPATH, "//a[contains(@class,'active') and contains(@href, '/admin/orders')]"
+                                       "/p[contains(text(), 'Orders')]")
+
