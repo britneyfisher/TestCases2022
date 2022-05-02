@@ -1,0 +1,7 @@
+from selenium.webdriver.common.by import By
+
+
+class LocatorFRCustomers:
+    label_customers = (By.XPATH, "//a[contains(text(), 'Customers')]")
+    link_customers_active = (By.XPATH, "//a[contains(@class,'active') and contains(@href, '/admin/customers')]"
+                                       "/p[contains(text(), 'Customers')]")
